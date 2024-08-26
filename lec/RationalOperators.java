@@ -37,9 +37,9 @@ public class RationalOperators{
             right[i] = sc.nextInt();
         }
         int result[] = plus(left,right);
-        System.out.println(result[0]+" "+result[1]);
+        System.out.println("합: "+result[0]+" "+result[1]);
         
         result= subtract(left, right);
-        System.out.println(result[0]+" "+result[1]);
+        System.out.println("차: "+result[0]+" "+result[1]);
     }
 }
