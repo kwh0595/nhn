@@ -16,9 +16,9 @@ public class RationalOperators{
         return new int[] {numerator/g, denominator/g};
     }
     public static int gCD(int numerator, int denominator){
-        int max = numerator>denominator?numerator:denominator;
+        int min = numerator<denominator?numerator:denominator;
         int gcd=0;
-        for(int i=1;i<=max;i++){
+        for(int i=1;i<=min;i++){
             if(numerator%i==0 && denominator%i==0){
                 gcd=i;
             }
@@ -26,6 +26,7 @@ public class RationalOperators{
         return gcd;
     }
     public static void main(String []args){
+       try{
         System.out.println("분자와 분모를 입력하세요.");
         Scanner sc = new Scanner(System.in);
         int []left = new int[2];
@@ -37,9 +38,13 @@ public class RationalOperators{
             right[i] = sc.nextInt();
         }
         int result[] = plus(left,right);
-        System.out.println("합: "+result[0]+" "+result[1]);
+        System.out.println(result[0]+" "+result[1]);
         
         result= subtract(left, right);
-        System.out.println("차: "+result[0]+" "+result[1]);
+        System.out.println(result[0]+" "+result[1]);
+       }
+    catch(Exception e){
+        System.out.println("예외발생");
     }
+}
 }
