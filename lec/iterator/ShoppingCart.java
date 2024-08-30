@@ -1,20 +1,28 @@
-import java.util.ArrayList;
+
 import java.util.Iterator;
-import java.util.List;
 public class ShoppingCart implements Iterable<Product>{
     int shoppingCartNo;
-    List<Product> list;
+    Product [] list;
+    int index = 0;
+   // List<Product> list;
     public ShoppingCart(int shoppingCartNo){
        this.shoppingCartNo = shoppingCartNo;
-       list= new ArrayList<Product>();
+       list = new Product[100];
     }
     public int getShoppingCartNo(){
         return this.shoppingCartNo;
     }
     public void addProduct(Product p){
-        list.add(p);
+        list[index++] = p;
     }
-    public Iterator<Product> iterator(){
-        return this.list.iterator();
+    public Product get(int index){
+        return list[index];
+    }
+    public int getSize(){
+        return index+1;
+    }
+    @Override
+    public Iterator<Product> iterator() {
+        return new ShoppingCartIterator(this);
     }
 }
