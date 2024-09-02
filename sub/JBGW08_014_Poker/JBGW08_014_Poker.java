@@ -29,18 +29,13 @@ public class JBGW08_014_Poker{
         }
         return myCard;
     }
-    static void printCard(Player player, Player computer){
+    static void printCard(Player p){
         //generate iterator
-        Iterator<Card> playerIterator = player.iterator();
-        Iterator<Card> computerIterator = computer.iterator();
+        Iterator<Card> pIterator = p.iterator();
 
-        //print Player's card(using iterator)
-        System.out.println(player.getName()+"'s Five Card");
-        while(playerIterator.hasNext()){
-            System.out.println(playerIterator.next());
-        }System.out.println("\nComputer's Five Card");
-        while(computerIterator.hasNext()){
-            System.out.println(computerIterator.next());
+        System.out.println(p.getName()+"'s Five Card");
+        while(pIterator.hasNext()){
+            System.out.println(pIterator.next());
         }System.out.println();
     }
     static void printRank(Player p){
@@ -78,7 +73,8 @@ public class JBGW08_014_Poker{
         player.sort();
         computer.sort();
 
-        printCard(player, computer);
+        printCard(player);
+        printCard(computer);
         
         //result
         printRank(player);
