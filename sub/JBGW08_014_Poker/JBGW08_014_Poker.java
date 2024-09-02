@@ -7,7 +7,8 @@ import java.util.Iterator;
 public class JBGW08_014_Poker{
     static List<Card> pokerCard = new ArrayList<>();
     static Map<Rank, Integer> score = Rank.rankScore();
-    static void generateCard(){
+
+    static void generateCard(){     //generate 52Cards
         String JQKA[] = {"J","Q","K","A"};
         for(int i=2;i<=14;i++){
             for(Suit s: Suit.values()){
@@ -20,7 +21,7 @@ public class JBGW08_014_Poker{
             }
         }
     }
-    static List<Card> selectCard(){
+    static List<Card> selectCard(){     //provide 5cards
         List<Card> myCard = new ArrayList<>();
         for(int i=0;i<5;i++){
             myCard.add(pokerCard.get(i));
@@ -28,51 +29,62 @@ public class JBGW08_014_Poker{
         }
         return myCard;
     }
-    public static void main(String []args){
-        generateCard();
-        Collections.shuffle(pokerCard);
-
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Write your name: ");
-        String name = sc.nextLine();
-       
-        Player player = new Player(name, selectCard());
-        Player computer = new Player("computer",selectCard());
-
-        player.sort();
-        computer.sort();
-
+    static void printCard(Player player, Player computer){
+        //generate iterator
         Iterator<Card> playerIterator = player.iterator();
         Iterator<Card> computerIterator = computer.iterator();
 
+        //print Player's card(using iterator)
         System.out.println(player.getName()+"'s Five Card");
         while(playerIterator.hasNext()){
             System.out.println(playerIterator.next());
         }System.out.println("\nComputer's Five Card");
         while(computerIterator.hasNext()){
             System.out.println(computerIterator.next());
+        }System.out.println();
+    }
+    static void printRank(Player p){
+        Rank playerScore = p.pokerAlgorithm();
+        int pScore = score.get(playerScore);
+        System.out.println(p.getName()+": "+playerScore+" "+pScore+"점");
+        if(playerScore==Rank.HighCard){
+            System.out.println(p.getName()+"'s high card : "+p.getCardNo(4)+"\n");
         }
+    }
+    static void whoisWinner(Player player, Player computer){
+        int pScore = score.get(player.pokerAlgorithm());
+        int cScore = score.get(computer.pokerAlgorithm());
+        //who is winner
+        if(pScore>cScore){
+            System.out.println("winner: "+player.getName());
+        }else if(pScore<cScore){
+            System.out.println("winner: "+computer.getName());
+        }else{
+            System.out.println("No winner");
+        }
+    }
 
-       Rank playerScore = player.pokerAlgorithm();
-       Rank computerScore = computer.pokerAlgorithm();
-       int pScore = score.get(playerScore);
-       int cScore = score.get(computerScore);
+    public static void main(String []args){
+        generateCard();
+        Collections.shuffle(pokerCard);     //card shuffle
 
-       System.out.println(player.getName()+": "+playerScore+" "+pScore+"점");
-       System.out.println(computer.getName()+": "+computerScore+" "+cScore+"점");
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Write your name: ");
+        String name = sc.nextLine();
        
-       if(pScore>cScore){
-        System.out.println("winner: "+player.getName());
-       }else if(pScore<cScore){
-        System.out.println("winner: "+computer.getName());
-       }else{
-        System.out.println("No winner");
-       }
-       if(playerScore==Rank.HighCard && computerScore==Rank.HighCard){
-        System.out.println("player high card : "+player.getCardNo(4));
-        System.out.println("computer high card :"+computer.getCardNo(4));
-       }
+        Player player = new Player(name, selectCard());   //player
+        Player computer = new Player("computer",selectCard());   //computer
+        //card sort
+        player.sort();
+        computer.sort();
 
+        printCard(player, computer);
+        
+        //result
+        printRank(player);
+        printRank(computer);
+        
+        whoisWinner(player, computer);
         sc.close();
     }
 }
